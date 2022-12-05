@@ -1,0 +1,56 @@
+import React, { useState } from 'react'
+
+function TodoList() {
+    const [activity, setActivity] = useState("");
+    const [listData, setlistData] = useState([]);
+    function addActivity(){
+        
+
+        setlistData((listData)=>{
+            const updatelist =[...listData, activity];
+            setActivity('');
+            return updatelist;
+        })
+    }
+    function removeActivity(i){
+        const updatelistData = listData.filter((elem, id) =>{
+            return i!==id;
+        })
+        setlistData(updatelistData);
+    }
+    function removeAll(){
+        setlistData([]);
+    }
+
+
+    return(
+        <>
+
+        <div>
+            <input type="text" placeholder="Add Activity" value={activity} onChange={(e) =>setActivity(e.target.value)} />
+            <button onClick={addActivity}>Add</button>
+            <p>Show Your Task:</p>
+            {listData!==[] && listData.map(( data, i) =>{
+            return(
+                <>
+                <b key={i}><br></br>
+                     {data} 
+                    <button onClick={ ()=> removeActivity(i)} >remove(-)</button>
+                </b>
+                </>
+            )
+
+            })}
+            { listData.length>=1 &&   
+            <button onClick={removeAll}>Remove All</button> }
+           
+            
+        </div>
+
+        </>
+    )
+}
+
+
+
+export default TodoList;
